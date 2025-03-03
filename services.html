@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400&display=swap');
+
+    :root {
+      --primary-color: #D62839;
+      --secondary-color: #1a1a1a;
+      --accent-color: #ff4757;
+      --text-color: #e0e0e0;
+      --dark-bg: #121212;
+      --card-bg: #1e1e1e;
+      --card-hover-bg: #252525;
+      --footer-bg: #0a0a0a;
+      --border-color: #333;
+      --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      --border-radius: 8px;
+      --text-light: #ffffff;
+      --bg-dark: #000;
+      --primary-dark: #D62839;
+      --text-muted: #b3b3b3;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+    
+    body {
+      background-color: var(--dark-bg);
+      color: var(--text-color);
+      line-height: 1.6;
+      font-family: 'Roboto', sans-serif;
+      overflow-x: hidden;
+    }
+    
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    /* New Header Styles */
+    header {
+      padding: 20px 0;
+      position: fixed;
+      width: 100%;
+      z-index: 1000;
+      transition: all 0.4s ease;
+    }
+
+    header.scrolled {
+      background-color: rgba(18, 18, 18, 0.95);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      padding: 15px 0;
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo span {
+      font-size: 24px;
+      font-weight: 700;
+      background: linear-gradient(to right, #ff4d4d, #ff8080);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      margin: 0 15px;
+      color: var(--text-light);
+      text-decoration: none;
+      font-weight: 500;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      background: var(--primary-color);
+      bottom: -5px;
+      left: 0;
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover:after {
+      width: 100%;
+    }
+
+    .action-links {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .action-links a {
+      color: var(--text-light);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .action-links a:hover {
+      color: var(--primary-color);
+    }
+
+    .mobile-toggle {
+      display: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--text-light);
+    }
+
+    .btn-primary {
+      background: var(--accent-color);
+      color: var(--text-light);
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: inline-block;
+      box-shadow: 0 4px 15px rgba(255, 77, 77, 0.3);
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover {
+      background: #e0404e;
+      transform: translateY(-3px);
+    }
+
+    .close-menu {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 1002;
+      color: var(--text-light);
+      display: block;
+    }
+    
+    /* Original Service Page Styles */
+    .hero-section {
+      background-color: var(--secondary-color);
+      padding: 120px 0 80px;
+      text-align: center;
+      margin-bottom: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4));
+      z-index: 1;
+    }
+    
+    .hero-section .container {
+      position: relative;
+      z-index: 2;
+    }
+    
+    .hero-title {
+      font-size: 42px;
+      margin-bottom: 20px;
+      color: white;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    
+    .hero-subtitle {
+      font-size: 18px;
+      margin-bottom: 30px;
+      color: #ccc;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .process-flow {
+      background-color: var(--secondary-color);
+      padding: 60px 0;
+      margin-bottom: 40px;
+      text-align: center;
+      border-top: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .section-title {
+      font-size: 32px;
+      margin-bottom: 40px;
+      text-align: center;
+      color: white;
+      position: relative;
+      display: inline-block;
+      padding-bottom: 15px;
+    }
+    
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background-color: var(--primary-color);
+    }
+    
+    .process-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      max-width: 2000px;
+      margin: 0 auto;
+    }
+    
+    .process-step {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 20px 25px;
+      border-radius: 20px;
+      margin: 10px;
+      width: 160px;
+      text-align: center;
+      position: relative;
+      box-shadow: var(--box-shadow);
+      transition: transform 0.3s ease;
+    }
+    
+    .process-step:hover {
+      transform: translateY(-5px);
+    }
+    
+    .process-arrow {
+      font-size: 28px;
+      margin: 0 10px;
+      color: var(--primary-color);
+    }
+    
+    .features-section {
+      padding: 60px 0;
+      background-color: var(--dark-bg);
+      margin-bottom: 40px;
+    }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+    
+    .feature-card {
+      background-color: var(--card-bg);
+      padding: 30px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      transition: all 0.3s ease;
+      border: 1px solid var(--border-color);
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-10px);
+      background-color: var(--card-hover-bg);
+    }
+    
+    .feature-icon {
+      color: var(--primary-color);
+      font-size: 32px;
+      margin-bottom: 20px;
+      display: inline-block;
+      background-color: rgba(54, 185, 204, 0.1);
+      width: 60px;
+      height: 60px;
+      line-height: 60px;
+      text-align: center;
+      border-radius: 50%;
+    }
+    
+    .feature-title {
+      font-size: 20px;
+      margin-bottom: 15px;
+      font-weight: 600;
+      color: white;
+    }
+    
+    .feature-desc {
+      font-size: 14px;
+      color: #aaa;
+    }
+    
+    .solutions-section {
+      padding: 60px 0;
+    }
+    
+    .solution-card {
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      margin-bottom: 40px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--border-color);
+      transition: transform 0.3s ease;
+    }
+    
+    .solution-card:hover {
+      transform: translateY(-10px);
+    }
+    
+    @media (min-width: 768px) {
+      .solution-card {
+        flex-direction: row;
+      }
+      
+      .solution-card.reverse {
+        flex-direction: row-reverse;
+      }
+    }
+    
+    .solution-content {
+      padding: 40px;
+      flex: 1;
+    }
+    
+    .solution-image {
+      flex: 0 0 35%;
+      background-color: #141414;
+      min-height: 250px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+    
+    .solution-image img {
+      max-width: 100%;
+      height: auto;
+      transition: transform 0.5s ease;
+    }
+    
+    .solution-card:hover .solution-image img {
+      transform: scale(1.05);
+    }
+    
+    .solution-title {
+      font-size: 26px;
+      margin-bottom: 20px;
+      color: white;
+      position: relative;
+      padding-bottom: 15px;
+    }
+    
+    .solution-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      background-color: var(--accent-color);
+    }
+    
+    .solution-desc {
+      margin-bottom: 25px;
+      color: #aaa;
+      font-size: 16px;
+      line-height: 1.8;
+    }
+    
+    .btn {
+      display: inline-block;
+      padding: 12px 28px;
+      background-color: var(--accent-color);
+      color: white;
+      text-decoration: none;
+      border-radius: 30px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 14px;
+    }
+    
+    .btn:hover {
+      background-color: #e0404e;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(255, 71, 87, 0.3);
+    }
+    
+    /* New Footer Styles */
+    footer {
+      background-color: #1a1a1a;
+      color: #aaa;
+      padding: 80px 0 30px;
+      margin-top: 40px;
+      border-top: 1px solid var(--border-color);
+    }
+    
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+    }
+    
+    .footer-column h3 {
+      font-size: 18px;
+      margin-bottom: 25px;
+      position: relative;
+      padding-bottom: 15px;
+      color: white;
+    }
+    
+    .footer-column h3::after {
+      content: '';
+      position: absolute;
+      width: 40px;
+      height: 3px;
+      background: var(--primary-color);
+      bottom: 0;
+      left: 0;
+      border-radius: 3px;
+    }
+    
+    .footer-column ul {
+      list-style: none;
+    }
+    
+    .footer-column li {
+      margin-bottom: 15px;
+    }
+    
+    .footer-column a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .footer-column a:hover {
+      color: var(--text-light);
+      padding-left: 5px;
+    }
+    
+    .footer-column p {
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .social-link {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-light);
+      transition: all 0.3s ease;
+    }
+    
+    .social-link:hover {
+      background: var(--primary-color);
+      transform: translateY(-5px);
+    }
+    
+    .contact-info {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      color: var(--text-muted);
+    }
+    
+    .contact-info i {
+      width: 30px;
+      color: var(--primary-color);
+    }
+    
+    .copyright {
+      text-align: center;
+      padding-top: 30px;
+      border-top: 1px solid #333333;
+      color: #666;
+    }
+    
+    .back-to-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      background: var(--primary-color);
+      color: var(--text-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 99;
+      box-shadow: 0 4px 15px rgba(54, 185, 204, 0.3);
+    }
+    
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .back-to-top:hover {
+      background: #2ca8ba;
+      transform: translateY(-5px);
+    }
+    
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -300px;
+        width: 300px;
+        height: 100vh;
+        background: #1a1a1a;
+        flex-direction: column;
+        padding: 80px 30px;
+        transition: all 0.4s ease;
+        box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        background-color: var(--dark-bg);
+      }
+      
+      .nav-links.active {
+        right: 0;
+      }
+      
+      .nav-links a {
+        margin: 10px 0;
+      }
+      
+      .mobile-toggle {
+        display: block;
+        position: relative;
+        z-index: 999;
+      }
+      
+      .process-container {
+        flex-direction: column;
+      }
+      
+      .process-arrow {
+        transform: rotate(90deg);
+        margin: 10px 0;
+      }
+      
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .solution-card,
+      .solution-card.reverse {
+        flex-direction: column;
+      }
+      
+      .solution-image {
+        min-height: 200px;
+      }
+      
+      .hero-title {
+        font-size: 32px;
+      }
+      
+      .section-title {
+        font-size: 28px;
+      }
+    }
+    
+    @media (max-width: 576px) {
+      .header-container {
+        padding: 0 10px;
+      }
+      
+      .action-links {
+        display: none;
+      }
+      
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+      
+      .footer-column {
+        padding: 0 15px;
+      }
+    }
+    
+    @media screen and (min-width: 769px) {
+      .close-menu {
+        display: none !important;
+      }
+    }
+    
+    @media (max-width: 991px) {
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- New Header -->
+  <header id="header">
+    <div class="container header-container">
+      <div class="logo">
+        <span>Zeex</span>
+      </div>
+      <div class="nav-links" id="navLinks">
+        <span class="close-menu" id="closeMenu"><i class="fas fa-times"></i></span>
+        <a href="/home.html">Home</a>
+        <a href="/services.html">Services</a>
+        <a href="/about.html">About</a>
+        <a href="/contact.html">Contact</a>
+        <a href="/blog.html">Blog</a>
+      </div>
+      <div class="action-links">
+        <a href="/contact.html" class="btn-primary">Get Started</a>
+      </div>
+      <div class="mobile-toggle" id="mobileToggle">
+        <i class="fas fa-bars"></i>
+      </div>
+    </div>
+  </header>
+  
+  <!-- Original Service Page Content -->
+  <section class="hero-section">
+    <div class="container">
+      <h1 class="hero-title">Safety and Surveillance</h1>
+      <p class="hero-subtitle">Advanced AI-powered surveillance systems for comprehensive security solutions across various industries</p>
+    </div>
+  </section>
+  
+  <section class="process-flow">
+    <div class="container">
+      <h2 class="section-title">How ASAI Works?</h2>
+      <div class="process-container">
+        <div class="process-step">
+          <p>Capture Video</p>
+        </div>
+        <div class="process-arrow">→</div>
+        <div class="process-step">
+          <p>ASAI Process</p>
+        </div>
+        <div class="process-arrow">→</div>
+        <div class="process-step">
+          <p>Identify Events</p>
+        </div>
+        <div class="process-arrow">→</div>
+        <div class="process-step">
+          <p>Alert Operators</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="features-section" id="features">
+    <div class="container">
+      <h2 class="section-title">Key Features</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+          <h3 class="feature-title">Real-Time Protection</h3>
+          <p class="feature-desc">Advanced AI algorithms for threat detection, rapid response.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-microchip"></i></div>
+          <h3 class="feature-title">Multi AI-Hybrid Solutions</h3>
+          <p class="feature-desc">Both hardware & cloud-based products for different needs.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+          <h3 class="feature-title">Analytics and Reporting</h3>
+          <p class="feature-desc">Comprehensive data analysis and insights.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-brain"></i></div>
+          <h3 class="feature-title">Continuous AI Optimization</h3>
+          <p class="feature-desc">Adaptive learning, automated model updates & deployment.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-eye"></i></div>
+          <h3 class="feature-title">24/7 Monitoring</h3>
+          <p class="feature-desc">Continuous surveillance without interruption.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-cloud"></i></div>
+          <h3 class="feature-title">Seamless Integration</h3>
+          <p class="feature-desc">Plug-and-play setup, multi-device support, customizable dashboard.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="solutions-section" id="solutions">
+    <div class="container">
+      <h2 class="section-title">Our Solutions</h2>
+      
+      <div class="solution-card">
+        <div class="solution-content">
+          <h3 class="solution-title">ASAI for Banks and ATM's</h3>
+          <p class="solution-desc">Advanced security solutions tailored for financial institutions. Our AI-powered surveillance detects suspicious behavior and prevents fraud in real-time.</p>
+          <a href="#" class="btn">Learn More</a>
+        </div>
+        <div class="solution-image">
+          <img src="/img/assai_atm01.jpg" alt="Bank security system">
+        </div>
+      </div>
+      
+      <div class="solution-card reverse">
+        <div class="solution-content">
+          <h3 class="solution-title">ASAI for Stores, Super Market and Warehouses</h3>
+          <p class="solution-desc">Intelligent monitoring systems that prevent theft, track inventory, and ensure safety compliance throughout retail and storage environments.</p>
+          <a href="#" class="btn">Learn More</a>
+        </div>
+        <div class="solution-image">
+          <img src="/img/assai_shop01.jpg" alt="Store security system">
+        </div>
+      </div>
+      
+      <div class="solution-card">
+        <div class="solution-content">
+          <h3 class="solution-title">ASAI for Safety in Houses and Societies</h3>
+          <p class="solution-desc">Residential security solutions that protect your family and property with smart detection of unauthorized access and unusual activity.</p>
+          <a href="#" class="btn">Learn More</a>
+        </div>
+        <div class="solution-image">
+          <img src="/img/assai_home02.jpg" alt="Home security system">
+        </div>
+      </div>
+      
+      <!-- <div class="solution-card reverse">
+        <div class="solution-content">
+          <h3 class="solution-title">ASAI for Fire Hazard, Floods and Weather Safety</h3>
+          <p class="solution-desc">Environmental monitoring systems that detect and alert about potential hazards before they become emergencies, protecting property and lives.</p>
+          <a href="#" class="btn">Learn More</a>
+        </div>
+        <div class="solution-image">
+          <img src="/img/" alt="Environmental monitoring">
+        </div>
+      </div> -->
+      
+      <div class="solution-card">
+        <div class="solution-content">
+          <h3 class="solution-title">Public & Traffic Surveillance & Management</h3>
+          <p class="solution-desc">Smart city solutions that optimize traffic flow, detect incidents, and enhance public safety through advanced AI analytics.</p>
+          <a href="#" class="btn">Learn More</a>
+        </div>
+        <div class="solution-image">
+          <img src="/img/assai_traffic02.jpg" alt="Traffic monitoring">
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- New Footer -->
+  <footer id="contact">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h3>Zeex</h3>
+                <p>Zeex AI is a leading innovator in AI-powered safety and surveillance, dedicated to creating secure environments through advanced real-time intelligence and cutting-edge technology.</p>
+                <div class="social-links">
+                    <!-- <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a> -->
+                    <a href="https://www.linkedin.com/company/zeex-ai/" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    <!-- <a href="#" class="social-link"><i class="fab fa-instagram"></i></a> -->
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Our Services</h3>
+                <ul>
+                    <li><a href="#">Real-Time Protection</a></li>
+                    <li><a href="#">Multi AI-hybrid Solutions</a></li>
+                    <li><a href="#">Seamless Intregration</a></li>
+                    <li><a href="#">Continuous AI Optimizations</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Info</h3>
+                <div class="contact-info">
+                    <i class="fas fa-envelope"></i>
+                    <span>admin@zeexai.com</span>
+                </div>
+                <div class="contact-info">
+                    <i class="fas fa-phone"></i>
+                    <span>+91 8709221636</span>
+                </div>
+                <div class="contact-info">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Nirmaan, CFI, IIT Madras</span>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="/home.html">Home</a></li>
+                    <li><a href="/about.html">About</a></li>
+                    <li><a href="/services.html">Services</a></li>
+                    <li><a href="/contact.html">Contact</a></li>
+                    <li><a href="/blog.html">Blog</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2025 Zeex Ai. All Rights Reserved.</p>
+        </div>
+    </div>
+</footer>
+  
+  <a href="#" class="back-to-top" id="backToTop">
+    <i class="fas fa-arrow-up"></i>
+  </a>
+  
+  <!-- JavaScript for navbar and back-to-top functionality -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Header scroll effect
+      const header = document.getElementById('header');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 100) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+      });
+      
+      // Mobile menu toggle
+      const mobileToggle = document.getElementById('mobileToggle');
+      const closeMenu = document.getElementById('closeMenu');
+      const navLinks = document.getElementById('navLinks');
+      
+      mobileToggle.addEventListener('click', () => {
+        navLinks.classList.add('active');
+      });
+      
+      closeMenu.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+      });
+      
+      // Close menu when clicking outside
+      document.addEventListener('click', function(event) {
+        if (!navLinks.contains(event.target) && !mobileToggle.contains(event.target)) {
+          navLinks.classList.remove('active');
+        }
+      });
+      
+      // Back to top button
+      const backToTopButton = document.getElementById('backToTop');
+      
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+          backToTopButton.classList.add('show');
+        } else {
+          backToTopButton.classList.remove('show');
+        }
+      });
+      
+      backToTopButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
+</body>
+</html>

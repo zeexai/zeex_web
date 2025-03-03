@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400&display=swap');
+
+        :root {
+            --primary-color:#E63946;
+            --accent-color: #3498db;
+            --text-light: #ffffff;
+            --bg-dark: #000;
+            --gradient: linear-gradient(135deg, #3498db, #2980b9);
+            --primary-dark: #D62839;
+            --secondary-color: #457B9D;
+            --dark-bg: #121212;
+            --card-bg: #1e1e1e;
+            --text-muted: #b3b3b3;
+            --gradient-bg: linear-gradient(135deg, #457B9D, #1D3557);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+        
+        body {
+            background-color: #121621;
+            color: #e0e0e0;
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.4s ease;
+        }
+
+        header.scrolled {
+            background-color: rgba(18, 18, 18, 0.95);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            padding: 15px 0;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            filter: drop-shadow(0 0 8px rgba(255, 77, 77, 0.5));
+        }
+
+        .logo span {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(to right, #ff4d4d, #ff8080);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            margin: 0 15px;
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+
+        .action-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .action-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .action-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .mobile-toggle {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: var(--text-light);
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(255, 77, 77, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #1a1f2e 0%, #232a45 100%);
+            padding: 180px 0 80px; /* Increased padding-top to account for fixed header */
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            max-width: 600px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            color: #ffffff;
+        }
+        
+        .hero p {
+            font-size: 16px;
+            margin-bottom: 30px;
+            color: #b8b8b8;
+        }
+        
+        .hero-btns {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background-color: #E63946;
+            color: #ffffff;
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            background-color:#a8111d;
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: #E63946;
+            border: 1px solid #E63946;
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(140, 82, 255, 0.1);
+        }
+        
+        .hero-shape {
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(140, 82, 255, 0.3) 0%, rgba(140, 82, 255, 0) 70%);
+            border-radius: 50%;
+            z-index: 1;
+        }
+        
+        /* Mission and Vision */
+        .mission-vision {
+            padding: 80px 0;
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+        }
+        
+        .mission-box, .vision-box {
+            flex: 1;
+            background-color: #1a1f2e;
+            border-radius: 12px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: transform 0.3s;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .mission-box:hover, .vision-box:hover {
+            transform: translateY(-5px);
+        }
+        
+        .icon-container {
+            width: 70px;
+            height: 70px;
+            background-color: rgba(230, 57, 70, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+        
+        .icon {
+            color: #E63946;
+            font-size: 28px;
+        }
+        
+        .mission-box h3, .vision-box h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+        
+        .mission-box p, .vision-box p {
+            color: #b0b0b0;
+        }
+        
+        /* Services Section */
+        .services {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title h2 {
+            font-size: 36px;
+            color: #ffffff;
+            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: #E63946;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .service-card {
+            background-color: #1a1f2e;
+            border-radius: 12px;
+            padding: 30px;
+            transition: transform 0.3s;
+            border-left: 3px solid #E63946;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .service-card h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+        
+        .service-card p {
+            color: #b0b0b0;
+            font-size: 14px;
+        }
+        
+        /* Why Choose Us */
+        .why-choose {
+            padding: 80px 0;
+            background-color: #151a28;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background-color: #1a1f2e;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .feature-card img {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 20px;
+            filter: invert(100%);
+        }
+        
+        .feature-card h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+        
+        .feature-card p {
+            color: #b0b0b0;
+            font-size: 14px;
+        }
+        
+        /* Footer from blog page */
+        footer {
+            background-color: #1a1a1a;
+            padding: 80px 0 30px;
+            margin-top: 80px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 3px;
+            background: var(--primary-color);
+            bottom: 0;
+            left: 0;
+            border-radius: 3px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 15px;
+        }
+
+        .footer-column a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .footer-column a:hover {
+            color: var(--text-light);
+            padding-left: 5px;
+        }
+
+        .footer-column p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-link {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--primary-color);
+            transform: translateY(-5px);
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            color: var(--text-muted);
+        }
+
+        .contact-info i {
+            width: 30px;
+            color: var(--primary-color);
+        }
+
+        .copyright {
+            text-align: center;
+            color: #777777;
+            padding-top: 30px;
+            border-top: 1px solid #333333;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            color: var(--text-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 99;
+            box-shadow: 0 4px 15px rgba(255, 77, 77, 0.3);
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: var(--primary-dark);
+            transform: translateY(-5px);
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 992px) {
+            .mission-vision {
+                flex-direction: column;
+            }
+            
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -300px;
+                width: 300px;
+                height: 100vh;
+                background: #1a1a1a;
+                flex-direction: column;
+                padding: 80px 30px;
+                transition: all 0.4s ease;
+                box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+                z-index: 1000;
+                background-color: var(--dark-bg);
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .nav-links a {
+                margin: 10px 0;
+            }
+            
+            .mobile-toggle {
+                display: block;
+                position: relative;
+                z-index: 999;
+            }
+            
+            .close-menu {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                font-size: 24px;
+                cursor: pointer;
+                z-index: 1002;
+                color: var(--text-light);
+                display: block;
+            }
+            
+            .hero-btns {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .section-title h2 {
+                font-size: 28px;
+            }
+            
+            .hero h1 {
+                font-size: 28px;
+            }
+            
+            .action-links {
+                display: none;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media screen and (min-width: 769px) {
+            .close-menu {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation from blog page -->
+    <header id="header">
+        <div class="container header-container">
+            <div class="logo">
+                <span>Zeex</span>
+            </div>
+            <div class="nav-links" id="navLinks">
+                <span class="close-menu" id="closeMenu"><i class="fas fa-times"></i></span>
+                <a href="/home.html">Home</a>
+                <a href="/services.html">Services</a>
+                <a href="/about.html">About</a>
+                <a href="/contact.html">Contact</a>
+                <a href="/blog.html">Blog</a>
+            </div>
+            <div class="action-links">
+                <a href="/contact.html" class="btn-primary">Get Started</a>
+            </div>
+            <div class="mobile-toggle" id="mobileToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section (Original About content) -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Empowering Security with Our AI-Driven Surveillance</h1>
+                <p>At Zeex AI, we revolutionize security with AI-driven surveillance, offering real-time threat detection, anomaly recognition, and instant alerts for businesses, public spaces, and critical infrastructures. Our on-premise and cloud-based solutions ensure proactive security, smart automation, and rapid response, transforming surveillance into an intelligent, efficient, and future-ready system.</p>
+                <div class="hero-btns">
+                    <a href="/services.html" class="btn btn-primary">Start Your AI Journey</a>
+                    <a href="/home.html" class="btn btn-secondary">Learn More</a>
+                </div>
+            </div>
+        </div>
+        <div class="hero-shape"></div>
+    </section>
+
+    <!-- Mission and Vision (Original About content) -->
+    <section class="mission-vision">
+        <div class="container">
+            <div class="mission-vision" style="flex-direction: row;">
+                <div class="mission-box">
+                    <div class="icon-container">
+                        <span class="icon">⚙️</span>
+                    </div>
+                    <h3>Our Mission</h3>
+                    <p>To revolutionize security with AI-driven surveillance, delivering intelligent, real-time monitoring solutions that enhance safety, prevent threats, and ensure proactive protection for businesses and public spaces.</p>
+                </div>
+                <div class="vision-box">
+                    <div class="icon-container">
+                        <span class="icon">👁️</span>
+                    </div>
+                    <h3>Our Vision</h3>
+                    <p>To make AI-powered surveillance accessible and effective for all, enabling businesses and public spaces to leverage intelligent security solutions for proactive threat detection, real-time monitoring, and enhanced safety.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section (Original About content) -->
+    <section class="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>What We Offer</h2>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>Custom AI-Powered Surveillance</h3>
+                    <p>Real-time monitoring with intelligent threat detection & anomaly recognition</p>
+                </div>
+                <div class="service-card">
+                    <h3>Proactive Security Solutions</h3>
+                    <p>Instant alerts & automated incident response for enhanced safety</p>
+                </div>
+                <!-- <div class="service-card">
+                    <h3>Custom AI Surveillance Systems</h3>
+                    <p>Tailor-made AI solutions for any business need</p>
+                </div> -->
+                <div class="service-card">
+                    <h3>Predictive Threat AI Analytics </h3>
+                    <p>Data-Driven strategies for smarter decision-making</p>
+                </div>
+                <!-- <div class="service-card">
+                    <h3>AI-Integrated Automation</h3>
+                    <p>Streamlining processes for efficiency & cost reduction</p>
+                </div> -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us (Original About content) -->
+    <section class="why-choose">
+        <div class="container">
+            <div class="section-title">
+                <h2>Why Choose Zeex AI?</h2>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <img src="/api/placeholder/60/60" alt="End-to-End AI Expertise">
+                    <h3>End-to-End AI Expertise</h3>
+                    <p>From development to deployment</p>
+                </div>
+                <div class="feature-card">
+                    <img src="/api/placeholder/60/60" alt="Tailored Solutions">
+                    <h3>Tailored Solutions</h3>
+                    <p>AI survilliances designed specifically for your differents needs</p>
+                </div>
+                <div class="feature-card">
+                    <img src="/api/placeholder/60/60" alt="Cutting-Edge Innovation">
+                    <h3>Multi AI-Hybrid Solutions </h3>
+                    <p>Both hardware & cloud-based products for different needs.</p>
+                </div>
+                <div class="feature-card">
+                    <img src="/api/placeholder/60/60" alt="Seamless Integration">
+                    <h3>Seamless Integration</h3>
+                    <p>Plug-and-play setup, multi-device support, customizable dashboard.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer from blog page -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>Zeex</h3>
+                    <p>Zeex AI is a leading innovator in AI-powered safety and surveillance, dedicated to creating secure environments through advanced real-time intelligence and cutting-edge technology.</p>
+                    <div class="social-links">
+                        <!-- <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a> -->
+                        <a href="https://www.linkedin.com/company/zeex-ai/" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <!-- <a href="#" class="social-link"><i class="fab fa-instagram"></i></a> -->
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Our Services</h3>
+                    <ul>
+                        <li><a href="#">Real-Time Protection</a></li>
+                        <li><a href="#">Multi AI-hybrid Solutions</a></li>
+                        <li><a href="#">Seamless Intregration</a></li>
+                        <li><a href="#">Continuous AI Optimizations</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <div class="contact-info">
+                        <i class="fas fa-envelope"></i>
+                        <span>admin@zeexai.com</span>
+                    </div>
+                    <div class="contact-info">
+                        <i class="fas fa-phone"></i>
+                        <span>+91 8709221636</span>
+                    </div>
+                    <div class="contact-info">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Nirmaan, CFI, IIT Madras</span>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/home.html">Home</a></li>
+                        <li><a href="/about.html">About</a></li>
+                        <li><a href="/services.html">Services</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                        <li><a href="/blog.html">Blog</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2025 Zeex Ai. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <a href="#" class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Header scroll effect
+            const header = document.getElementById('header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+            
+            // Mobile menu toggle
+            const mobileToggle = document.getElementById('mobileToggle');
+            const closeMenu = document.getElementById('closeMenu');
+            const navLinks = document.getElementById('navLinks');
+            
+            mobileToggle.addEventListener('click', () => {
+                navLinks.classList.add('active');
+            });
+            
+            closeMenu.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!navLinks.contains(event.target) && !mobileToggle.contains(event.target)) {
+                    navLinks.classList.remove('active');
+                }
+            });
+            
+            // Back to top button
+            const backToTopButton = document.getElementById('backToTop');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    backToTopButton.classList.add('show');
+                } else {
+                    backToTopButton.classList.remove('show');
+                }
+            });
+            
+            backToTopButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400&display=swap');
+
+        :root {
+            --primary-color:#E63946;
+            --accent-color: #3498db;
+            --text-light: #ffffff;
+            --bg-dark: #000;
+            --gradient: linear-gradient(135deg, #3498db, #2980b9);
+            --primary-dark: #D62839;
+            --secondary-color: #457B9D;
+            --dark-bg: #121212;
+            --card-bg: #1e1e1e;
+            --text-muted: #b3b3b3;
+            --gradient-bg: linear-gradient(135deg, #457B9D, #1D3557);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            background: var(--bg-dark);
+            color: #e1e1e1;
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.4s ease;
+        }
+
+        header.scrolled {
+            background-color: rgba(18, 18, 18, 0.95);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            padding: 15px 0;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo span {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(to right, #ff4d4d, #ff8080);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            margin: 0 15px;
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+
+        .action-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .action-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .action-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .mobile-toggle {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: var(--text-light);
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(255, 77, 77, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+        }
+
+        /* Added to push content down to account for fixed header */
+        .main-content {
+            padding-top: 80px;
+        }
+
+        /* Contact Section Styles */
+        .section {
+            padding: 4rem 2rem;
+        }
+
+        /* Header Section */
+        .header-section {
+            background: linear-gradient(135deg,Black);
+            color: white;
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background-color: #1e1e1e;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .content-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4rem;
+        }
+
+        .contact-text {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-color: #2a2a2a;
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .contact-text h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: #e1e1e1;
+        }
+
+        .icon-diamond {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            background-color: rgb(209, 33, 33);
+            transform: rotate(45deg);
+            position: relative;
+            box-shadow: 0 3px 8px rgba(229, 30, 30, 0.5);
+        }
+
+        .icon-diamond::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 10px;
+            height: 10px;
+            background-color: white;
+            border-radius: 50%;
+        }
+
+        .contact-form {
+            flex: 1;
+            min-width: 300px;
+            padding: 3rem;
+            background-color: #262626;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #3a3a3a;
+            border-radius: 8px;
+            background-color: #1a1a1a;
+            color: #e1e1e1;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #1e88e5;
+            box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.2);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #777;
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background-color: #E63946;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(30, 136, 229, 0.3);
+        }
+
+        .submit-btn:hover {
+            background-color: #c01b15;
+            transform: translateY(-2px);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Support Section */
+        .support-section {
+            background-color: #0d1117;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .support-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            background-color: #161616;
+            padding: 4rem 2rem;
+        }
+
+        .faq-section h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #e1e1e1;
+        }
+
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            border: none;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 1.5rem;
+            background-color: #2a2a2a;
+            cursor: pointer;
+            font-weight: 600;
+            color: #e1e1e1;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background-color: #323232;
+        }
+
+        .faq-question.active {
+            background-color: #E63946;
+            color: white;
+        }
+
+        .faq-arrow {
+            transition: transform 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .faq-question.active .faq-arrow {
+            transform: rotate(180deg);
+            color: white;
+        }
+
+        .faq-answer {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background-color: #212121;
+        }
+
+        .faq-answer.active {
+            padding: 1.5rem;
+            max-height: 300px;
+        }
+
+        .faq-answer p {
+            color: #aaa;
+            line-height: 1.8;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #1a1a1a;
+            padding: 80px 0 30px;
+            margin-top: 80px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 3px;
+            background: var(--primary-color);
+            bottom: 0;
+            left: 0;
+            border-radius: 3px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 15px;
+        }
+
+        .footer-column a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .footer-column a:hover {
+            color: var(--text-light);
+            padding-left: 5px;
+        }
+
+        .footer-column p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-link {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--primary-color);
+            transform: translateY(-5px);
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            color: var(--text-muted);
+        }
+
+        .contact-info i {
+            width: 30px;
+            color: var(--primary-color);
+        }
+
+        .copyright {
+            text-align: center;
+            color: #777777;
+            padding-top: 30px;
+            border-top: 1px solid #333333;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            color: var(--text-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 99;
+            box-shadow: 0 4px 15px rgba(255, 77, 77, 0.3);
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: var(--primary-dark);
+            transform: translateY(-5px);
+        }
+
+        .close-menu {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 1002;
+            color: var(--text-light);
+            display: none;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -300px;
+                width: 300px;
+                height: 100vh;
+                background: #1a1a1a;
+                flex-direction: column;
+                padding: 80px 30px;
+                transition: all 0.4s ease;
+                box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+                z-index: 1000;
+                background-color: var(--dark-bg);
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .nav-links a {
+                margin: 10px 0;
+            }
+            
+            .mobile-toggle {
+                display: block;
+                position: relative;
+                z-index: 999;
+            }
+            
+            .close-menu {
+                display: block;
+            }
+            
+            .content-wrapper {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .header p {
+                font-size: 1rem;
+            }
+            
+            .contact-text h2 {
+                font-size: 1.5rem;
+            }
+
+            .contact-text, .contact-form {
+                padding: 2rem;
+            }
+
+            .section {
+                padding: 3rem 1.5rem;
+            }
+            
+            .action-links {
+                display: none;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .faq-section h2 {
+                font-size: 2rem;
+            }
+
+            .contact-text, .contact-form {
+                padding: 1.5rem;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        @media screen and (min-width: 769px) {
+            .close-menu {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header/Navbar -->
+    <header id="header">
+        <div class="container header-container">
+            <div class="logo">
+                <span>Zeex</span>
+            </div>
+            <div class="nav-links" id="navLinks">
+                <span class="close-menu" id="closeMenu"><i class="fas fa-times"></i></span>
+                <a href="Home.html">Home</a>
+                <a href="service.html">Services</a>
+                <a href="About.html">About</a>
+                <a href="contact.html">Contact</a>
+                <a href="blog.html">Blog</a>
+            </div>
+            <div class="action-links">
+                <a href="/contact.html" class="btn-primary">Get Started</a>
+            </div>
+            <div class="mobile-toggle" id="mobileToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header Section -->
+        <section class="header-section">
+            <div class="container header">
+                <h1>Let's Build the Future with AI!</h1>
+                <p>Have a question? Need a custom AI Surivilliance solution? We're here to help! Whether you're looking for AI-powered security Surivilliances. our team is ready to assist you.</p>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="section contact-section">
+            <div class="container content-wrapper">
+                <div class="contact-text">
+                    <h2><span class="icon-diamond"></span> Reach out to us today and empowering your safety to the next level with AI!</h2>
+                </div>
+
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <input type="text" id="name" placeholder="Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" id="phone" placeholder="Phone">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" placeholder="Email" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" placeholder="Message" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">SEND MESSAGE</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Support Section -->
+        <section class="support-section">
+            <div class="container">
+                <h3>Support</h3>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="section faq-section">
+            <div class="container">
+                <h2>Frequently Asked Questions</h2>
+                
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question active" onclick="toggleFAQ(this)">
+                            <div>What AI safety solutions does Zeex AI offer?</div>
+                            <div class="faq-arrow">▼</div>
+                        </div>
+                        <div class="faq-answer active">
+                            <p>Zeex AI provides cutting-edge AI-powered surveillance solutions that analyze real-time CCTV footage, detect threats, recognize anomalies, and send instant alerts for enhanced security.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <div>How can I integrate Zeex AI's surveillance technology?</div>
+                            <div class="faq-arrow">▼</div>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Zeex AI solutions are designed for seamless integration with existing CCTV systems and security infrastructures. We offer cloud-based and edge AI deployment options to suit various requirements.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <div>Does Zeex AI support cloud and on-premise deployment?</div>
+                            <div class="faq-arrow">▼</div>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes, Zeex AI supports both cloud-based processing on AWS and on-premise AI-powered edge devices, ensuring flexibility based on security and data privacy needs.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <div>Can Zeex AI solutions be customized for my needs?</div>
+                            <div class="faq-arrow">▼</div>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Absolutely! Zeex AI offers industry-specific AI models tailored for Home, offic, Society, ATMs, banks, retail stores, warehouses, and traffic surveillance. We work closely with clients to meet their unique security challenges.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <div>What are the technical requirements for integration?</div>
+                            <div class="faq-arrow">▼</div>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Zeex AI’s solutions are compatible with IP-based and analog CCTV systems. They require a stable network connection and, for edge AI devices, sufficient power and processing capabilities.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <div>How does Zeex AI ensure data security and compliance?</div>
+                            <div class="faq-arrow">▼</div>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Our AI surveillance systems implement end-to-end encryption, secure data storage, and comply with industry standards to protect sensitive security footage and ensure regulatory compliance.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer Section -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>Zeex</h3>
+                    <p>Zeex AI is a leading innovator in AI-powered safety and surveillance, dedicated to creating secure environments through advanced real-time intelligence and cutting-edge technology.</p>
+                    <div class="social-links">
+                        <!-- <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a> -->
+                        <a href="https://www.linkedin.com/company/zeex-ai/" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <!-- <a href="#" class="social-link"><i class="fab fa-instagram"></i></a> -->
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Our Services</h3>
+                    <ul>
+                        <li><a href="#">Real-Time Protection</a></li>
+                        <li><a href="#">Multi AI-hybrid Solutions</a></li>
+                        <li><a href="#">Seamless Intregration</a></li>
+                        <li><a href="#">Continuous AI Optimizations</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <div class="contact-info">
+                        <i class="fas fa-envelope"></i>
+                        <span>admin@zeexai.com</span>
+                    </div>
+                    <div class="contact-info">
+                        <i class="fas fa-phone"></i>
+                        <span>+91 8709221636</span>
+                    </div>
+                    <div class="contact-info">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Nirmaan, CFI, IIT Madras</span>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/home.html">Home</a></li>
+                        <li><a href="/about.html">About</a></li>
+                        <li><a href="/services.html">Services</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                        <li><a href="/blog.html">Blog</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2025 Zeex Ai. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <a href="#" class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Form submission
+            document.getElementById('contactForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form values
+                const name = document.getElementById('name').value;
+                const phone = document.getElementById('phone').value;
+                const email = document.getElementById('email').value;
+                const message = document.getElementById('message').value;
+                
+                // In a real application, you would send this data to your server
+                console.log('Form submitted:', { name, phone, email, message });
+                
+                // Show success message (in a real app, you would check for success from server)
+                alert('Thank you for your message! We will get back to you soon.');
+                
+                // Reset form
+                this.reset();
+            });
+
+            // FAQ toggle
+            function toggleFAQ(element) {
+                // Toggle active class for the question
+                element.classList.toggle('active');
+                
+                // Toggle active class for the answer
+                const answer = element.nextElementSibling;
+                answer.classList.toggle('active');
+                
+                // Close other FAQs when opening a new one
+                const allQuestions = document.querySelectorAll('.faq-question');
+                const allAnswers = document.querySelectorAll('.faq-answer');
+                
+                for (let i = 0; i < allQuestions.length; i++) {
+                    if (allQuestions[i] !== element) {
+                        allQuestions[i].classList.remove('active');
+                        allAnswers[i].classList.remove('active');
+                    }
+                }
+            }
+
+            // Auto-open the first FAQ on page load
+            const firstQuestion = document.querySelector('.faq-question');
+            const firstAnswer = document.querySelector('.faq-answer');
+            
+            if (firstQuestion && firstAnswer) {
+                firstQuestion.classList.add('active');
+                firstAnswer.classList.add('active');
+            }
+
+            // Make the toggleFAQ function globally available
+            window.toggleFAQ = toggleFAQ;
+            
+            // Header scroll effect
+            const header = document.getElementById('header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+            
+            // Mobile menu toggle
+            const mobileToggle = document.getElementById('mobileToggle');
+            const closeMenu = document.getElementById('closeMenu');
+            const navLinks = document.getElementById('navLinks');
+            
+            mobileToggle.addEventListener('click', () => {
+                navLinks.classList.add('active');
+            });
+            
+            closeMenu.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!navLinks.contains(event.target) && !mobileToggle.contains(event.target)) {
+                    navLinks.classList.remove('active');
+                }
+            });
+            
+            // Back to top button
+            const backToTopButton = document.getElementById('backToTop');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    backToTopButton.classList.add('show');
+                } else {
+                    backToTopButton.classList.remove('show');
+                }
+            });
+            
+            backToTopButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blogs</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400&display=swap');
+
+        :root {
+            --primary-color:#E63946;
+            --accent-color: #3498db;
+            --text-light: #ffffff;
+            --bg-dark: #000;
+            --gradient: linear-gradient(135deg, #3498db, #2980b9);
+            --primary-dark: #D62839;
+            --secondary-color: #457B9D;
+            --dark-bg: #121212;
+            --card-bg: #1e1e1e;
+            --text-muted: #b3b3b3;
+            --gradient-bg: linear-gradient(135deg, #457B9D, #1D3557);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background: var(--bg-dark);
+            color: #e0e0e0;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.4s ease;
+        }
+
+        header.scrolled {
+            background-color: rgba(18, 18, 18, 0.95);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            padding: 15px 0;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            filter: drop-shadow(0 0 8px rgba(255, 77, 77, 0.5));
+        }
+
+        .logo span {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(to right, #ff4d4d, #ff8080);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            margin: 0 15px;
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+
+        .action-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .action-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .action-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .mobile-toggle {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: var(--text-light);
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(255, 77, 77, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+        }
+
+        /* Main Content */
+        .content-container {
+            text-align: center;
+            max-width: 1200px;
+            padding: 120px 20px 40px;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+        }
+
+        .headline {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(52, 152, 219, 0.7);
+        }
+
+        .subtext {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 50px;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 800px;
+        }
+
+        .subscription-form {
+            position: relative;
+            max-width: 500px;
+            width: 100%;
+            margin: 0 auto 60px;
+            display: flex;
+            background-color: rgba(37, 37, 50, 0.7);
+            border-radius: 5px;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+
+        .email-input {
+            flex-grow: 1;
+            padding: 16px 20px;
+            border: none;
+            background: transparent;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            width: 100%;
+        }
+
+        .email-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .subscribe-button {
+            padding: 15px 25px;
+            background-color: #E63946;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            border-radius: 0;
+            white-space: nowrap;
+        }
+
+        .subscribe-button:hover {
+            background-color: #a8111d;
+            box-shadow: 0 0 15px rgba(52, 152, 219, 0.7);
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .blog-card {
+            background: rgba(52, 152, 219, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            text-align: left;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(52, 152, 219, 0.3);
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .blog-date {
+            font-size: 0.9rem;
+            color: #3498db;
+            margin-bottom: 10px;
+        }
+
+        .blog-title {
+            font-family: 'Orbitron', sans-serif;
+            color: white;
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+
+        .blog-excerpt {
+            margin-bottom: 15px;
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+
+        .read-more {
+            display: inline-block;
+            padding: 8px 15px;
+            background: #E63946;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            margin-top: auto;
+            align-self: flex-start;
+        }
+
+        .read-more:hover {
+            background: #a8111d;
+            box-shadow: 0 0 15px rgba(52, 152, 219, 0.7);
+        }
+
+        .featured-articles {
+            width: 100%;
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        .featured-heading {
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            color: white;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            text-shadow: 0 0 10px rgba(52, 152, 219, 0.3);
+        }
+
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #1a1a1a;
+            padding: 80px 0 30px;
+            margin-top: 80px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 3px;
+            background: var(--primary-color);
+            bottom: 0;
+            left: 0;
+            border-radius: 3px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 15px;
+        }
+
+        .footer-column a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .footer-column a:hover {
+            color: var(--text-light);
+            padding-left: 5px;
+        }
+
+        .footer-column p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-link {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--primary-color);
+            transform: translateY(-5px);
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            color: var(--text-muted);
+        }
+
+        .contact-info i {
+            width: 30px;
+            color: var(--primary-color);
+        }
+
+        .copyright {
+            text-align: center;
+            color: #777777;
+            padding-top: 30px;
+            border-top: 1px solid #333333;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            color: var(--text-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 99;
+            box-shadow: 0 4px 15px rgba(255, 77, 77, 0.3);
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: var(--primary-dark);
+            transform: translateY(-5px);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1200px) {
+            .blog-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .blog-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .headline {
+                font-size: 2rem;
+            }
+            
+            .subtext {
+                font-size: 1rem;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -300px;
+                width: 300px;
+                height: 100vh;
+                background: #1a1a1a;
+                flex-direction: column;
+                padding: 80px 30px;
+                transition: all 0.4s ease;
+                box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+                z-index: 1000;
+                background-color: var(--dark-bg);
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .nav-links a {
+                margin: 10px 0;
+            }
+            
+            .mobile-toggle {
+                display: block;
+                position: relative;
+                z-index: 999;
+            }
+            
+            .close-menu {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                font-size: 24px;
+                cursor: pointer;
+                z-index: 1002;
+                color: var(--text-light);
+                display: block;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .content-container {
+                padding: 100px 15px 30px;
+            }
+            
+            .headline {
+                font-size: 1.8rem;
+            }
+            
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .subscription-form {
+                flex-direction: column;
+                max-width: 100%;
+            }
+            
+            .email-input {
+                width: 100%;
+                border-radius: 5px 5px 0 0;
+            }
+            
+            .subscribe-button {
+                width: 100%;
+                border-radius: 0 0 5px 5px;
+            }
+            
+            .header-container {
+                padding: 0 10px;
+            }
+            
+            .action-links {
+                display: none;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .footer-column {
+                padding: 0 15px;
+            }
+        }
+
+        @media screen and (min-width: 769px) {
+            .close-menu {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <div class="container header-container">
+            <div class="logo">
+                <!-- <img src="/api/placeholder/40/40" alt="Securo Logo"> -->
+                <span>Zeex</span>
+            </div>
+            <div class="nav-links" id="navLinks">
+                <span class="close-menu" id="closeMenu"><i class="fas fa-times"></i></span>
+                <a href="Home.html">Home</a>
+                <a href="service.html">Services</a>
+                <a href="About.html">About</a>
+                <a href="contact.html">Contact</a>
+                <a href="blog.html">Blog</a>
+            </div>
+            <div class="action-links">
+                <a href="/contact.html" class="btn-primary">Get Started</a>
+            </div>
+            <div class="mobile-toggle" id="mobileToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+    <div id="particles-js"></div>
+    
+    <div class="content-container">
+        <h1 class="headline">Discover the our most recent articles</h1>
+        
+        <p class="subtext">
+            Discover how AI-driven surveillance systems are transforming security, enabling real-time threat detection, anomaly recognition, and automated alerts for enhanced safety.
+        </p>
+        
+        <div class="subscription-form">
+            <input type="email" class="email-input" placeholder="Email" required>
+            <button type="submit" class="subscribe-button">Subscribe</button>
+        </div>
+
+        <div class="featured-articles">
+            <h2 class="featured-heading">Featured Articles</h2>
+        </div>
+        
+        <div class="blog-grid">
+            <div class="blog-card">
+                <img src="/img/actionai.jpeg" alt="Generative AI Advancements" class="blog-image">
+                <h3 class="blog-title">AI in Action: Preventing Theft & Unauthorized Access</h3>
+                <p class="blog-excerpt">Explore how AI-powered CCTV monitoring is reshaping crime prevention by identifying suspicious activities, reducing false alarms, and providing actionable insights..</p>
+                <a href="#" class="read-more">Read More</a>
+            </div>
+            
+            <div class="blog-card">
+                <img src="/img/edge.jpeg" alt="AI Ethics Frameworks" class="blog-image">
+                <h3 class="blog-title">Edge AI for Real-Time Security Monitoring</h3>
+                <p class="blog-excerpt">Learn how edge AI computing is reducing response times and ensuring privacy by processing surveillance data on-site, without relying on cloud-based systems.</p>
+                <a href="#" class="read-more">Read More</a>
+            </div>
+            
+            <div class="blog-card">
+                <img src="/img/smartai.jpeg" alt="AI in Healthcare" class="blog-image">
+                <h3 class="blog-title">Smart AI Cameras: The Future of Surveillance</h3>
+                <p class="blog-excerpt">How next-gen AI cameras leverage deep learning to detect unusual behavior, recognize faces, and improve security across high-risk environments.</p>
+                <a href="#" class="read-more">Read More</a>
+            </div>
+        </div>
+    </div>
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>Zeex</h3>
+                    <p>Zeex AI is a leading innovator in AI-powered safety and surveillance, dedicated to creating secure environments through advanced real-time intelligence and cutting-edge technology.</p>
+                    <div class="social-links">
+                        <!-- <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a> -->
+                        <a href="https://www.linkedin.com/company/zeex-ai/" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <!-- <a href="#" class="social-link"><i class="fab fa-instagram"></i></a> -->
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Our Services</h3>
+                    <ul>
+                        <li><a href="#">Real-Time Protection</a></li>
+                        <li><a href="#">Multi AI-hybrid Solutions</a></li>
+                        <li><a href="#">Seamless Intregration</a></li>
+                        <li><a href="#">Continuous AI Optimizations</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <div class="contact-info">
+                        <i class="fas fa-envelope"></i>
+                        <span>admin@zeexai.com</span>
+                    </div>
+                    <div class="contact-info">
+                        <i class="fas fa-phone"></i>
+                        <span>+91 8709221636</span>
+                    </div>
+                    <div class="contact-info">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Nirmaan, CFI, IIT Madras</span>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/home.html">Home</a></li>
+                        <li><a href="/about.html">About</a></li>
+                        <li><a href="/services.html">Services</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                        <li><a href="/blog.html">Blog</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2025 Zeex Ai. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    
+    <a href="#" class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize particles.js
+            particlesJS("particles-js", {
+                particles: {
+                    number: { value: 80, density: { enable: true, value_area: 800 } },
+                    color: { value: "#3498db" },
+                    shape: { type: "circle" },
+                    opacity: { value: 0.5, random: false },
+                    size: { value: 3, random: true },
+                    line_linked: { enable: true, distance: 150, color: "#3498db", opacity: 0.4, width: 1 },
+                    move: { enable: true, speed: 6, direction: "none", random: false, straight: false, out_mode: "out", bounce: false }
+                },
+                interactivity: {
+                    detect_on: "canvas",
+                    events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" }, resize: true },
+                    modes: { repulse: { distance: 100, duration: 0.4 }, push: { particles_nb: 4 } }
+                },
+                retina_detect: true
+            });
+            
+            // Header scroll effect
+            const header = document.getElementById('header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+            
+            // Mobile menu toggle
+            const mobileToggle = document.getElementById('mobileToggle');
+            const closeMenu = document.getElementById('closeMenu');
+            const navLinks = document.getElementById('navLinks');
+            
+            mobileToggle.addEventListener('click', () => {
+                navLinks.classList.add('active');
+            });
+            
+            closeMenu.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!navLinks.contains(event.target) && !mobileToggle.contains(event.target)) {
+                    navLinks.classList.remove('active');
+                }
+            });
+            
+            // Back to top button
+            const backToTopButton = document.getElementById('backToTop');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    backToTopButton.classList.add('show');
+                } else {
+                    backToTopButton.classList.remove('show');
+                }
+            });
+            
+            backToTopButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Basic form submission handling
+            const form = document.querySelector('.subscription-form');
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const emailInput = document.querySelector('.email-input');
+                const email = emailInput.value.trim();
+                
+                if (validateEmail(email)) {
+                    // Here you would typically send the data to a server
+                    console.log('Subscription request for:', email);
+                    alert('Thank you for subscribing!');
+                    emailInput.value = '';
+                } else {
+                    alert('Please enter a valid email address.');
+                }
+            });
+            
+            function validateEmail(email) {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(email);
+            }
+        });
+    </script>
+</body>
+</html>
